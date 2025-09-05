@@ -1,9 +1,11 @@
-image_name := env("BUILD_IMAGE_NAME", "arch-bootc")
+image_name := env("BUILD_IMAGE_NAME", "pmos-bootc")
 image_tag := env("BUILD_IMAGE_TAG", "latest")
 base_dir := env("BUILD_BASE_DIR", ".")
 filesystem := env("BUILD_FILESYSTEM", "ext4")
+pm_exports := env("PM_EXPORTS", "./pm-exports")
 
 build-containerfile $image_name=image_name:
+    cp {{pm_exports}}/vmlinuz-stable ./ && \
     sudo podman build -t "${image_name}:latest" .
 
 bootc *ARGS:
