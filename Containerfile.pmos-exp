@@ -1,4 +1,4 @@
-FROM localhost/postmarketos:latest AS builder
+FROM localhost/pmos:latest AS builder
 
 COPY vmlinuz-stable /boot/vmlinuz
 
@@ -84,6 +84,8 @@ RUN --mount=type=tmpfs,dst=/tmp cd /tmp && \
     git switch origin/sdboot-support -d && \
     CC=clang CXX=clang++ cargo build --release --bins --features systemd-boot && \
     make install
+
+RUN apk add linux-stable linux-headers
 
 RUN env \
     KERNEL_VERSION="$(basename "$(find "/lib/modules" -maxdepth 1 -type d | grep -v -E "*.img" | tail -n 1)")" \
