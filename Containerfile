@@ -83,7 +83,7 @@ RUN --mount=type=tmpfs,dst=/tmp cd /tmp && \
     cd bootupd && \
     git fetch --all && \
     git switch origin/sdboot-support -d && \
-    CC=clang CXX=clang++ make && \
+    CC=clang CXX=clang++ cargo build --release --bins --features systemd-boot && \
     make install
 
 RUN env \
@@ -108,4 +108,8 @@ RUN usermod -p "$(echo "changeme" | mkpasswd -s)" root
 # Necessary for `bootc install`
 RUN echo -e '[composefs]\nenabled = yes\n[sysroot]\nreadonly = true' | tee "/usr/lib/ostree/prepare-root.conf"
 
+
+COPY ./initramfs /boot/initramfs
+RUN KERNEL_VERSION="$(basename "$(find "/lib/modules" -maxdepth 1 -type d | grep -v -E "*.img" | tail -n 1)")" cp /boot/vmlinuz /usr/lib/modules/${KERNEL_VERSION}/vmlinuz
+RUN KERNEL_VERSION="$(basename "$(find "/lib/modules" -maxdepth 1 -type d | grep -v -E "*.img" | tail -n 1)")" cp /boot/initramfs /usr/lib/modules/${KERNEL_VERSION}/initramfs
 LABEL containers.bootc 1

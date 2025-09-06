@@ -6,6 +6,7 @@ pm_exports := env("PM_EXPORTS", "./pm-exports")
 
 build-containerfile $image_name=image_name:
     cp {{pm_exports}}/vmlinuz-stable ./ && \
+    cp {{pm_exports}}/initramfs ./ && \
     sudo podman build -t "${image_name}:latest" .
 
 bootc *ARGS:

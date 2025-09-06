@@ -2,3 +2,5 @@ cosign.key
 *.img
 pm-exports/
 vmlinuz-stable
+vmlinuz
+initramfs
