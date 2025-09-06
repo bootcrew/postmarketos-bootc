@@ -111,5 +111,4 @@ RUN echo -e '[composefs]\nenabled = yes\n[sysroot]\nreadonly = true' | tee "/usr
 
 COPY ./initramfs /boot/initramfs
 RUN KERNEL_VERSION="$(basename "$(find "/lib/modules" -maxdepth 1 -type d | grep -v -E "*.img" | tail -n 1)")" cp /boot/vmlinuz /usr/lib/modules/${KERNEL_VERSION}/vmlinuz
-RUN KERNEL_VERSION="$(basename "$(find "/lib/modules" -maxdepth 1 -type d | grep -v -E "*.img" | tail -n 1)")" cp /boot/initramfs /usr/lib/modules/${KERNEL_VERSION}/initramfs
 LABEL containers.bootc 1

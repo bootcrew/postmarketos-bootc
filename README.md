@@ -1,16 +1,22 @@
-# Arch Linux Bootc
+# PostmarketOS Bootc
 
-Experiment to see if Bootc could work on Arch Linux. And it does! With the composefs-backend :)
+Experiment to see if Bootc could work on PostmarketOS.
 
-<img width="2335" height="1296" alt="image" src="https://github.com/user-attachments/assets/0a19ad09-fdb6-4b7f-96f0-28ae9df12889" />
-
-<img width="2305" height="846" alt="image" src="https://github.com/user-attachments/assets/f496a2f4-0782-408c-b207-c7acdde2e5ac" />
-
-Its Arch! Its Bootc! Its cool!
 
 ## Building
 
-In order to get a running arch-bootc system you can run the following steps:
+This requires an already setup postmarketos environment.
+
+Firstly, we need to generate a postmarketos image.
+
+1. Download and install `pmbootstrap` with [these instructions](https://wiki.postmarketos.org/wiki/Pmbootstrap/Installation).
+2. Run `pmbootstrap init` and use all the defaults, except when it asks about `systemd` set it to `always`
+3. Run `pmboostrap install`
+4. Go to a repo directory, create a `pm-exports` folder, cd into it, and run `pmbootstrap export . `
+   1. You should now have a folder filled with symlinks, but only `initramfs`, `qemu-amd64.img`, and `vmlinuz-stable` are valid.
+5. Move up to the parent directory, and run the rest of these commands.
+
+In order to get a running pmos-bootc system you can run the following steps:
 ```shell
 just build-containerfile # This will build the containerfile and all the dependencies you need
 just generate-bootable-image # Generates a bootable image for you using bootc!
