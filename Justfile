@@ -4,6 +4,9 @@ base_dir := env("BUILD_BASE_DIR", ".")
 filesystem := env("BUILD_FILESYSTEM", "ext4")
 pm_exports := env("PM_EXPORTS", "./pm-exports")
 
+build-base-pmos:
+    sudo podman build -t pmos -f pmos.dockerfile .
+    
 build-containerfile $image_name=image_name:
     cp {{pm_exports}}/vmlinuz-stable ./ && \
     cp {{pm_exports}}/initramfs ./ && \
